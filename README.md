@@ -1,5 +1,5 @@
 # Tertateur
-On l'appelle comment ? \r\n
+On l'appelle comment ?
 Tertateur dans 2 bords
 
 ## Projet Symfony
