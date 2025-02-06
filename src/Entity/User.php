@@ -2,109 +2,107 @@
 
 namespace App\Entity;
 
-use ApiPlatform\Metadata\ApiResource;
 use App\Repository\UserRepository;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
-#[ApiResource]
-class User
+#[ORM\UniqueConstraint(name: 'UNIQ_IDENTIFIER_USERNAME', fields: ['username'])]
+class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column(length: 50)]
-    private ?string $pseudo = null;
-
-    #[ORM\Column(length: 500, nullable: true)]
-    private ?string $description = null;
-
-    #[ORM\Column(length: 500, nullable: true)]
-    private ?string $photo_profil = null;
+    #[ORM\Column(length: 180)]
+    private ?string $username = null;
 
     /**
-     * @var Collection<int, Album>
+     * @var list<string> The user roles
      */
-    #[ORM\OneToMany(targetEntity: Album::class, mappedBy: 'User')]
-    private Collection $albums;
+    #[ORM\Column]
+    private array $roles = [];
 
-    public function __construct()
-    {
-        $this->albums = new ArrayCollection();
-    }
+    /**
+     * @var string The hashed password
+     */
+    #[ORM\Column]
+    private ?string $password = null;
 
     public function getId(): ?int
     {
         return $this->id;
     }
 
-    public function getPseudo(): ?string
+    public function getUsername(): ?string
     {
-        return $this->pseudo;
+        return $this->username;
     }
 
-    public function setPseudo(string $pseudo): static
+    public function setUsername(string $username): static
     {
-        $this->pseudo = $pseudo;
-
-        return $this;
-    }
-
-    public function getDescription(): ?string
-    {
-        return $this->description;
-    }
-
-    public function setDescription(?string $description): static
-    {
-        $this->description = $description;
-
-        return $this;
-    }
-
-    public function getPhotoProfil(): ?string
-    {
-        return $this->photo_profil;
-    }
-
-    public function setPhotoProfil(?string $photo_profil): static
-    {
-        $this->photo_profil = $photo_profil;
+        $this->username = $username;
 
         return $this;
     }
 
     /**
-     * @return Collection<int, Album>
+     * A visual identifier that represents this user.
+     *
+     * @see UserInterface
      */
-    public function getAlbums(): Collection
+    public function getUserIdentifier(): string
     {
-        return $this->albums;
+        return (string) $this->username;
     }
 
-    public function addAlbum(Album $album): static
+    /**
+     * @see UserInterface
+     *
+     * @return list<string>
+     */
+    public function getRoles(): array
     {
-        if (!$this->albums->contains($album)) {
-            $this->albums->add($album);
-            $album->setUser($this);
-        }
+        $roles = $this->roles;
+        // guarantee every user at least has ROLE_USER
+        $roles[] = 'ROLE_USER';
+
+        return array_unique($roles);
+    }
+
+    /**
+     * @param list<string> $roles
+     */
+    public function setRoles(array $roles): static
+    {
+        $this->roles = $roles;
 
         return $this;
     }
 
-    public function removeAlbum(Album $album): static
+    /**
+     * @see PasswordAuthenticatedUserInterface
+     */
+    public function getPassword(): ?string
     {
-        if ($this->albums->removeElement($album)) {
-            // set the owning side to null (unless already changed)
-            if ($album->getUser() === $this) {
-                $album->setUser(null);
-            }
-        }
+        return $this->password;
+    }
+
+    public function setPassword(string $password): static
+    {
+        $this->password = $password;
 
         return $this;
+    }
+
+    /**
+     * @see UserInterface
+     */
+    public function eraseCredentials(): void
+    {
+        // If you store any temporary, sensitive data on the user, clear it here
+        // $this->plainPassword = null;
     }
 }
