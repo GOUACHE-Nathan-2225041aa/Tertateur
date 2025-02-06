@@ -28,6 +28,9 @@ class Album
     #[ORM\Column(type: Types::DATE_MUTABLE)]
     private ?\DateTimeInterface $date_fin = null;
 
+    #[ORM\Column(length: 255)]
+    private ?string $title = null;
+
     /**
      * @var Collection<int, Photo>
      */
@@ -106,6 +109,18 @@ class Album
                 $photo->setAlbum(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getTitle(): ?string
+    {
+        return $this->title;
+    }
+
+    public function setTitle(string $title): static
+    {
+        $this->title = $title;
 
         return $this;
     }
