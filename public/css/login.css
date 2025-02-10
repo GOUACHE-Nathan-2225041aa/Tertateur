@@ -4,7 +4,6 @@ body, html {
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: #f4f7fc; /* Light background color */
 }
 
 .login-container {
@@ -71,4 +70,77 @@ label {
 
 .mb-3 {
     margin-bottom: 15px;
+}
+
+
+/* login.css */
+form {
+    width: 100%;
+    max-width: 400px;
+    margin: 20px auto;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #f1f1f1;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Heading styling */
+h1 {
+    text-align: center;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+/* Style for form labels */
+label {
+    font-size: 1rem;
+    color: #333;
+    margin-bottom: 5px;
+    display: inline-block;
+}
+
+/* Form inputs */
+input[type="text"],
+input[type="password"] {
+    width: 95%;
+    padding: 10px;
+    margin: 10px 0;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 1rem;
+}
+
+/* Submit button styling */
+button[type="submit"] {
+    width: 100%;
+    padding: 10px;
+    background-color: #007bff;
+    border: none;
+    border-radius: 5px;
+    color: #fff;
+    font-size: 1rem;
+    cursor: pointer;
+}
+
+button[type="submit"]:hover {
+    background-color: #0056b3;
+}
+
+/* Error message styling */
+.alert-danger {
+    color: red;
+    background-color: #f8d7da;
+    padding: 10px;
+    border-radius: 5px;
+}
+
+/* Centering the form at the top */
+body {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    height: 100vh;
+    margin: 0;
+    background-color: #f0f0f0;
 }
