@@ -13,7 +13,7 @@ class AlbumController extends AbstractController
 {
     
     #[Route('/album/create', name: 'album_create_page', methods: ['GET'])]
-    public function createAlbumPage(): Response
+    public function createAlbumPage(): \Symfony\Component\HttpFoundation\Response
     {
         return $this->render('album/create.html.twig');
     }
