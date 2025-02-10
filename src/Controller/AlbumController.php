@@ -12,11 +12,23 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class AlbumController extends AbstractController
 {
+    
     #[Route('/album/create', name: 'album_create_page', methods: ['GET'])]
     public function createAlbumPage(): Response
     {
         return $this->render('album/create.html.twig');
     }
+
+    #[Route('/album', name: 'app_album', methods: ['GET'])]
+    public function listAlbums(EntityManagerInterface $entityManager): Response
+    {
+        $albums = $entityManager->getRepository(Album::class)->findAll();
+
+        return $this->render('album/index.html.twig', [
+            'albums' => $albums,
+        ]);
+    }
+
 
     #[Route('/api/album', name: 'create_album', methods: ['POST'])]
     public function createAlbum(Request $request, EntityManagerInterface $entityManager, UserRepository $userRepository): JsonResponse
