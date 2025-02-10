@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use ApiPlatform\Metadata\ApiResource;
+use ApiPlatform\Metadata\ApiProperty;
 use App\Repository\AlbumRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -18,7 +19,6 @@ class Album
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ApiProperty(identifiable: true)]
     #[ORM\ManyToOne(inversedBy: 'albums')]
     #[ORM\JoinColumn(nullable: false)]
     private ?User $user = null;
