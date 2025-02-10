@@ -19,7 +19,7 @@ class AlbumController extends AbstractController
     }
 
     #[Route('/album', name: 'app_album', methods: ['GET'])]
-    public function listAlbums(EntityManagerInterface $entityManager): Response
+    public function listAlbums(EntityManagerInterface $entityManager): \Symfony\Component\HttpFoundation\Response
     {
         $albums = $entityManager->getRepository(Album::class)->findAll();
 
