@@ -11,6 +11,9 @@ security:
                 property: email
         # used to reload user from session & other features (e.g. switch_user)
     firewalls:
+        api:
+            pattern: ^/api
+            stateless: false
         dev:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
             security: false
@@ -20,6 +23,7 @@ security:
             form_login:
                 login_path: app_login
                 check_path: app_login
+                default_target_path: /album
                 enable_csrf: true
             logout:
                 path: app_logout

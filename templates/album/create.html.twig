@@ -32,17 +32,24 @@
             const title = document.getElementById('title').value;
             const dateDeb = document.getElementById('date_deb').value;
             const dateFin = document.getElementById('date_fin').value;
-            const userId = document.getElementById('user_id').value;
 
-            const response = await fetch('/api/album', {
+            const userId = 1; // ID de l'utilisateur connecté, remplacez par l'utilisateur actuel
+
+            const requestData = {
+                user: `/api/users/${userId}`, // Lien vers l'utilisateur
+                dateDeb: new Date(dateDeb).toISOString(),
+                dateFin: new Date(dateFin).toISOString(),
+                title: title,
+                photos: []
+            };
+
+            const response = await fetch('/api/albums', {
                 method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({
-                    title: title,
-                    date_deb: dateDeb,
-                    date_fin: dateFin,
-                    user_id: userId
-                })
+                headers: {
+                    'accept': 'application/ld+json',
+                    'Content-Type': 'application/ld+json'
+                },
+                body: JSON.stringify(requestData)
             });
 
             const result = await response.json();
@@ -54,4 +61,5 @@
             }
         });
     </script>
+
 {% endblock %}

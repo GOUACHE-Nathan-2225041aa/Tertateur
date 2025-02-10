@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use ApiPlatform\Metadata\ApiResource;
+use ApiPlatform\Metadata\ApiProperty;
 use App\Repository\AlbumRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -23,10 +24,10 @@ class Album
     private ?User $user = null;
 
     #[ORM\Column(type: Types::DATE_MUTABLE)]
-    private ?\DateTimeInterface $date_deb = null;
+    private ?\DateTimeInterface $dateDeb = null;
 
     #[ORM\Column(type: Types::DATE_MUTABLE)]
-    private ?\DateTimeInterface $date_fin = null;
+    private ?\DateTimeInterface $dateFin = null;
 
     #[ORM\Column(length: 255)]
     private ?string $title = null;
@@ -61,24 +62,24 @@ class Album
 
     public function getDateDeb(): ?\DateTimeInterface
     {
-        return $this->date_deb;
+        return $this->dateDeb;
     }
 
-    public function setDateDeb(\DateTimeInterface $date_deb): static
+    public function setDateDeb(\DateTimeInterface $dateDeb): static
     {
-        $this->date_deb = $date_deb;
+        $this->dateDeb = $dateDeb;
 
         return $this;
     }
 
     public function getDateFin(): ?\DateTimeInterface
     {
-        return $this->date_fin;
+        return $this->dateFin;
     }
 
-    public function setDateFin(\DateTimeInterface $date_fin): static
+    public function setDateFin(\DateTimeInterface $dateFin): static
     {
-        $this->date_fin = $date_fin;
+        $this->dateFin = $dateFin;
 
         return $this;
     }
