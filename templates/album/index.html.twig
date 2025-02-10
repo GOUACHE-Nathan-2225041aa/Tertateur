@@ -1,20 +1,12 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello AlbumController!{% endblock %}
+{% block title %} Mes Albums {% endblock %}
 
 {% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
-
-<div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
-
-    This friendly message is coming from:
+    <h1>Liste des Albums</h1>
     <ul>
-        <li>Your controller at <code>/home/suricate/PhpstormProjects/Tertateur/src/Controller/AlbumController.php</code></li>
-        <li>Your template at <code>/home/suricate/PhpstormProjects/Tertateur/templates/album/index.html.twig</code></li>
+        {% for album in albums %}
+            <li>{{ album.title }} (du {{ album.dateDeb|date('d/m/Y') }} au {{ album.dateFin|date('d/m/Y') }})</li>
+        {% endfor %}
     </ul>
-</div>
 {% endblock %}
