@@ -1,0 +1,12 @@
+{% extends 'base.html.twig' %}
+
+{% block title %} Mes Albums {% endblock %}
+
+{% block body %}
+    <h1>Liste des Albums</h1>
+    <ul>
+        {% for album in albums %}
+            <li>{{ album.title }} (du {{ album.dateDeb|date('d/m/Y') }} au {{ album.dateFin|date('d/m/Y') }})</li>
+        {% endfor %}
+    </ul>
+{% endblock %}

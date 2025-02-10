@@ -20,6 +20,7 @@ security:
             form_login:
                 login_path: app_login
                 check_path: app_login
+                default_target_path: /album
                 enable_csrf: true
             logout:
                 path: app_logout

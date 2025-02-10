@@ -1,3 +1,7 @@
+index:
+    path: /
+    controller: App\Controller\RegistrationController::register
+
 controllers:
     resource:
         path: ../src/Controller/
