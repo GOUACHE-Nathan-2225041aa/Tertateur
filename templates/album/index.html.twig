@@ -1,8 +1,16 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Liste des albums{% endblock %}
+{% block title %} Mes Albums {% endblock %}
 
 {% block body %}
+    <a href="{{ path('album_create_page') }}" class="btn btn-primary">Créer un album</a>
+
+    {% if app.user %}
+        <div class="mb-3">
+            You are logged in as {{ app.user.userIdentifier }}, <a href="{{ path('app_logout') }}">Logout</a>
+        </div>
+    {% endif %}
+
     <h1>Liste des albums</h1>
     <ul>
         {% for album in albums %}
