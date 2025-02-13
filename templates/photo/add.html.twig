@@ -1,0 +1,10 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Ajouter une photo</h1>
+    {{ form_start(form) }}
+        {{ form_row(form.image) }}
+        {{ form_row(form.album) }}
+        {{ form_row(form.submit) }}
+    {{ form_end(form) }}
+{% endblock %}

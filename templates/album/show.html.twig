@@ -3,6 +3,7 @@
 {% block title %}Album - {{ album.title }}{% endblock %}
 
 {% block body %}
+    <a href="{{ path('photo_add') }}" class="btn btn-secondary">Ajouter une photo</a>
     <h1>{{ album.title }}</h1>
     <p>From {{ album.dateDeb|date('Y-m-d') }} to {{ album.dateFin|date('Y-m-d') }}</p>
     <p>Created by: {{ album.user.email }}</p>
