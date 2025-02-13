@@ -34,16 +34,15 @@ class PhotoController extends AbstractController
                 try {
                     $imageFile->move($this->getParameter('photos_directory'), $newFilename);
                 } catch (FileException $e) {
-                    // Gérer l'erreur
                 }
 
-                $photo->setImage($newFilename);
+                $photo->setContenu($newFilename);
             }
 
             $entityManager->persist($photo);
             $entityManager->flush();
 
-            return $this->redirectToRoute('albums_list');
+            return $this->redirectToRoute('app_album');
         }
 
         return $this->render('photo/add.html.twig', [

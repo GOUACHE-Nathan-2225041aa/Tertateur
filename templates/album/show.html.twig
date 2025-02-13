@@ -3,18 +3,27 @@
 {% block title %}Album - {{ album.title }}{% endblock %}
 
 {% block body %}
-    <a href="{{ path('photo_add') }}" class="btn btn-secondary">Ajouter une photo</a>
-    <h1>{{ album.title }}</h1>
-    <p>From {{ album.dateDeb|date('Y-m-d') }} to {{ album.dateFin|date('Y-m-d') }}</p>
-    <p>Created by: {{ album.user.email }}</p>
+    <div class="container mt-4">
+        <h1 class="mb-3">{{ album.title }}</h1>
+        <p class="text-muted">Du {{ album.dateDeb|date('d/m/Y') }} au {{ album.dateFin|date('d/m/Y') }}</p>
+        <p><strong>Créé par :</strong> {{ album.user.email }}</p>
+        
+        <a href="{{ path('photo_add', { 'album': album.id }) }}" class="btn btn-primary mb-3">Ajouter une photo</a>
 
-    <div class="photos">
-        {% for photo in album.photos %}
-            <div class="photo">
-                <img src="{{ asset('uploads/photos/' ~ photo.contenu) }}" alt="Photo">
+        {% if album.photos is not empty %}
+            <div class="row">
+                {% for photo in album.photos %}
+                    <div class="col-md-4 mb-3">
+                        <div class="card">
+                            <img src="{{ asset('uploads/photos/' ~ photo.contenu) }}" class="card-img-top" alt="Photo">
+                        </div>
+                    </div>
+                {% endfor %}
             </div>
-        {% endfor %}
-    </div>
+        {% else %}
+            <p class="text-muted">Aucune photo pour cet album pour le moment.</p>
+        {% endif %}
 
-    <a href="{{ path('app_album') }}">Retour à la liste des albums</a>
+        <a href="{{ path('app_album') }}" class="btn btn-secondary mt-3">Retour à la liste des albums</a>
+    </div>
 {% endblock %}
