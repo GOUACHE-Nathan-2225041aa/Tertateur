@@ -1,0 +1,19 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Album - {{ album.title }}{% endblock %}
+
+{% block body %}
+    <h1>{{ album.title }}</h1>
+    <p>From {{ album.dateDeb|date('Y-m-d') }} to {{ album.dateFin|date('Y-m-d') }}</p>
+    <p>Created by: {{ album.user.email }}</p>
+
+    <div class="photos">
+        {% for photo in album.photos %}
+            <div class="photo">
+                <img src="{{ asset('uploads/photos/' ~ photo.contenu) }}" alt="Photo">
+            </div>
+        {% endfor %}
+    </div>
+
+    <a href="{{ path('app_album') }}">Retour à la liste des albums</a>
+{% endblock %}

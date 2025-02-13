@@ -28,37 +28,17 @@ class AlbumController extends AbstractController
         ]);
     }
 
-
-    #[Route('/api/album', name: 'create_album', methods: ['POST'])]
-    public function createAlbum(Request $request, EntityManagerInterface $entityManager, UserRepository $userRepository): JsonResponse
+    #[Route('/album/{id}', name: 'album_show', methods: ['GET'])]
+    public function showAlbum(int $id, EntityManagerInterface $entityManager): \Symfony\Component\HttpFoundation\Response
     {
-        $data = json_decode($request->getContent(), true);
+        $album = $entityManager->getRepository(Album::class)->find($id);
 
-        if (!isset($data['title'], $data['user_id'], $data['date_deb'], $data['date_fin'])) {
-            return new JsonResponse(['error' => 'Missing title, user_id, date_deb or date_fin'], 400);
+        if (!$album) {
+            throw $this->createNotFoundException('Album not found');
         }
 
-        $user = $userRepository->find($data['user_id']);
-        if (!$user) {
-            return new JsonResponse(['error' => 'User not found'], 404);
-        }
-
-        try {
-            $dateDeb = new \DateTimeImmutable($data['date_deb']);
-            $dateFin = new \DateTimeImmutable($data['date_fin']);
-        } catch (\Exception $e) {
-            return new JsonResponse(['error' => 'Invalid date format. Use YYYY-MM-DD'], 400);
-        }
-
-        $album = new Album();
-        $album->setTitle($data['title']);
-        $album->setUser($user);
-        $album->setDateDeb($dateDeb);
-        $album->setDateFin($dateFin);
-
-        $entityManager->persist($album);
-        $entityManager->flush();
-
-        return new JsonResponse(['message' => 'Album created successfully'], 201);
+        return $this->render('album/show.html.twig', [
+            'album' => $album,
+        ]);
     }
 }
