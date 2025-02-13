@@ -1,13 +1,16 @@
 <?php
-
 namespace App\Entity;
 
 use ApiPlatform\Metadata\ApiResource;
 use App\Repository\PhotoRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Vich\UploaderBundle\Mapping\Annotation as Vich;
+use Symfony\Component\HttpFoundation\File\File;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 #[ORM\Entity(repositoryClass: PhotoRepository::class)]
 #[ApiResource]
+#[Vich\Uploadable]
 class Photo
 {
     #[ORM\Id]
@@ -21,6 +24,11 @@ class Photo
 
     #[ORM\Column(length: 500)]
     private ?string $contenu = null;
+
+    /**
+     * @Vich\UploadableField(mapping="photo_file", fileNameProperty="contenu")
+     */
+    private ?File $file = null;
 
     public function getId(): ?int
     {
@@ -48,6 +56,34 @@ class Photo
     {
         $this->contenu = $contenu;
 
+        return $this;
+    }
+
+    public function getFile(): ?File
+    {
+        return $this->file;
+    }
+
+    public function setFile(?File $file = null): void
+    {
+        $this->file = $file;
+
+        if ($file instanceof UploadedFile) {
+            $this->setUpdatedAt(new \DateTimeImmutable());
+        }
+    }
+
+    #[ORM\Column(type: "datetime", nullable: true)]
+    private ?\DateTimeImmutable $updatedAt = null;
+
+    public function getUpdatedAt(): ?\DateTimeImmutable
+    {
+        return $this->updatedAt;
+    }
+
+    public function setUpdatedAt(\DateTimeImmutable $updatedAt): self
+    {
+        $this->updatedAt = $updatedAt;
         return $this;
     }
 }
